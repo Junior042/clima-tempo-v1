@@ -4,9 +4,13 @@ const InfoDesc = document.querySelector('#info_desc');
 const temp = document.querySelector('#temperatura');
 const max_temp = document.querySelector('#max-temperatura');
 const min_temp = document.querySelector('#min-temperatura');
-
-
 const apiKey = '6054dce48a9074ef49fac01a21878063';
+const loading = document.querySelector('#loading_blur');
+
+let verifc_loading = setInterval(() => {
+  loading.style.display = 'flex';
+}, 10);
+
 let data = {
   lat: '',
   lon: ''
@@ -36,29 +40,42 @@ function busca(dados){
 }
 
 function render(dados){
-  newTime()
+  newBackground();
+  verifica(true);
   cidade.innerText = `| ${dados.name}`;
-  console.log(dados);
-  let id_icon = dados.weather[0].icon;
-  let infoDesc = dados.weather[0].description;
-
-  
-  InfoDesc.innerText = infoDesc;
-  temp.innerText = `${dados.main.temp}º`;
-  img.innerHTML = `<img src="https://openweathermap.org/img/wn/${id_icon}@2x.png" alt="icon tempo" >`;
+  InfoDesc.innerText = dados.weather[0].description;
+  temp.innerText = `${dados.main.temp}ºC`;
+  img.innerHTML = `<img src="https://openweathermap.org/img/wn/${dados.weather[0].icon}@2x.png" alt="icon tempo" >`;
 }
 
-// =============================================================================
+function verifica(dados){
+  if (dados) {
+    clearInterval(verifc_loading);
+    loading.style.display = 'none';
+  }
 
-function newTime(){
+}
+
+// Muda background dependendo da hora 
+function newBackground(){
   setInterval( function () {
-    let hr = new Date() 
+    let hr = new Date();
     let hora = hr.getHours();
     let minutes = hr.getMinutes(); 
-    if(hora == 14 && minutes >= 45){
+    if(hora >= 18 && minutes >= 00){
       const newFundo = document.querySelector('#fundo');
-      newFundo.innerHTML = ' <img class="fundo" src="https://wallpapercave.com/wp/wp3846558.jpg" alt="">';
+      newFundo.innerHTML = ' <img class="fundo" src="./img/noite.jpg" alt="">';
     }
-  }, 10);
-}
 
+    if(hora >= 05 && minutes >= 00 && hora < 12){
+      const newFundo = document.querySelector('#fundo');
+      newFundo.innerHTML = ' <img class="fundo" src="./img/manha.jpg" alt="">';
+    }
+
+    if(hora >= 12 && minutes >= 00 && hora < 18){
+      const newFundo = document.querySelector('#fundo');
+      newFundo.innerHTML = ' <img class="fundo" src="./img/tarde.jpg" alt="">';
+    }
+
+  }, 1000);
+}

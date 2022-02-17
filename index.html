@@ -9,9 +9,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="loading_blur">
+    <div class="spinner-border text-info" role="status">
+      <span class="sr-only"></span>
+    </div>
+  </div>
   <main>
     <div id="fundo">
-      <img class="fundo" src="./img/atanas-malamov-tpmav6c33de-unsplash.jpg" alt="">
+      <img class="fundo" src="./img/manha.jpg" alt="">
     </div>
     <header>
       <h1>Clima</h1>
@@ -31,9 +36,10 @@
      </div>
     </section>
     <footer>
-      <button onclick="getLocation()"  class="btn btn-light">RESTART</button>
+      <button onclick="getLocation()"  class="btn btn-light">Atualizar</button>
     </footer>
   </main>
+  
 
   
   <script src="main.js"></script>
